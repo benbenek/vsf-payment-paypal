@@ -4,6 +4,7 @@
 
 <script>
 import { currentStoreView, adjustMultistoreApiUrl } from '@vue-storefront/store/lib/multistore'
+// import EventBus from 'core/plugins/event-bus'
 
 export default {
   name: 'PaypalButton',
@@ -41,7 +42,7 @@ export default {
       docHead.appendChild(docScript)
     },
     configurePaypal () {
-      this.loader = true
+      // this.loader = true
       window.paypal.Button.render({
         // Pass in env
         env: this.$config.paypal.env,
@@ -108,14 +109,14 @@ export default {
         }).then((resp) => {
           vm.$bus.$emit('checkout-do-placeOrder', resp)
           if (resp.status === 'success') {
-            vm.$emit('payment-paypal-completed', resp)
+            vm.$bus.$emit('payment-paypal-completed', resp)
           }
         })
       }
       return true
     },
     onCancel (data) {
-      this.$emit('payment-paypal-cancelled', data)
+      this.$bus.$emit('payment-paypal-cancelled', data)
     }
   }
 }
