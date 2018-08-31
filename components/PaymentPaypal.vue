@@ -6,9 +6,9 @@
     </h4>
     <div class="bg-cl-secondary px20 py20">
       <p>
-        You are to pay for this order via PayPal.
+        You are to pay for this order via PayPal
       </p>
-      <paypal-button :grand-total="platformTotals['grand_total']"/>
+      <paypal-button :grand-total="grandTotal"/>
     </div>
   </div>
 
@@ -19,11 +19,10 @@ import PaypalButton from '../components/Button'
 
 export default {
   name: 'PaymentPaypal',
-  props: {
-    platformTotals: {
-      type: Object,
-      required: true,
-      default: () => {}
+  computed: {
+    grandTotal () {
+      console.log(this.$store)
+      return (this.$store.state.cart.platformTotals || [])['grand_total'] || 0
     }
   },
   components: {
